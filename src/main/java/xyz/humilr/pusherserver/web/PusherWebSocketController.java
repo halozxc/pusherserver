@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 
-@ServerEndpoint("/test")
+@ServerEndpoint("/socket")
 @Component
 @Slf4j
 public class PusherWebSocketController {
