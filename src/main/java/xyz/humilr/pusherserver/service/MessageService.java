@@ -10,6 +10,8 @@ import xyz.humilr.pusherserver.pojo.api.UserInfo;
 import xyz.humilr.pusherserver.pojo.module.GroupFan;
 import xyz.humilr.pusherserver.pojo.module.Message;
 
+import java.util.Date;
+
 @Service
 public class MessageService {
 
@@ -24,7 +26,7 @@ public class MessageService {
     @Autowired
     GroupService groupService;
     @Autowired
-    ContactMapper contactMapper;
+   ContactService contactService;
     public boolean publish(UserInfo userInfo, Message message){
 //        if(message.getSender() == null){
 //            return  false;
@@ -39,9 +41,10 @@ public class MessageService {
     else if(message.getDestination_user()!=null){
         Integer a =  userService.queryUserIdByName(message.getSender());
         Integer b = userService.queryUserIdByName(message.getDestination_user());
-           if(!contactMapper.vertifyContact(a,b)){
+           if(!contactService.vertifyContact(a.intValue(),b.intValue())){
           return false;
         }
+           message.setPublish_date(new Date());
        return publishToDatabase(message);
     }
         return true;
