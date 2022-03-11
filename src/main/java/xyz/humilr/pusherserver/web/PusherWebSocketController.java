@@ -2,15 +2,16 @@ package xyz.humilr.pusherserver.web;
 
 import lombok.extern.slf4j.Slf4j;
 
-import org.apache.commons.lang3.StringUtils;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+
 
 import org.springframework.web.bind.annotation.RestController;
-import xyz.humilr.pusherserver.config.JwtProperties;
 
+
+import xyz.humilr.pusherserver.dao.UserMapper;
+import xyz.humilr.pusherserver.pojo.module.Message;
+import xyz.humilr.pusherserver.pojo.module.User;
 import xyz.humilr.pusherserver.service.AuthService;
 import xyz.humilr.pusherserver.service.UserService;
 
@@ -28,27 +29,38 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class PusherWebSocketController {
 
-
-    @Autowired
-    AuthService authService;
+    static UserMapper userMapper;
+    static UserService userService;
+    static AuthService authService;
     /**
      * 存放所有在线的客户端
      */
-    private static Map<String, Session> clients = new ConcurrentHashMap<>();
+    private static Map<Integer, Session> clients = new ConcurrentHashMap<>();
+    @Autowired
+    public  void setUserMapper(UserMapper userMapper){
+        PusherWebSocketController.userMapper = userMapper;
+    }
+    @Autowired
+    public void setUserService(UserService userService){
+        PusherWebSocketController.userService = userService;
+    }
+    @Autowired
+    public void setAuthService(AuthService authService){
+        PusherWebSocketController.authService = authService;
+    }
+
 
     @OnOpen
     public void onOpen(@PathParam("username") String username ,@PathParam("password")String password, Session session) {
       log.info("有新的客户端连接了: {},username is {},user password is{}", session.getId(),username,password);
-       if(authService == null){
-           log.error("authservice is null");
-           return;
-       }
+
         String token = authService.authentication("siri1", "123456");
-        if (StringUtils.isBlank(token)) {
-           log.info("nothing");
-        }
-      //将新用户存入在线的组
-        clients.put(session.getId(), session);
+      if(token != null){
+          User user = userService.queryUser(username, password);
+          clients.put(user.getId(), session);
+          log.info("注册用户已加入连接，id为{}",user.getId());
+      }
+
     }
 
     /**
@@ -87,8 +99,23 @@ public class PusherWebSocketController {
      * @param message 消息内容
      */
     private void sendAll(String message) {
-        for (Map.Entry<String, Session> sessionEntry : clients.entrySet()) {
+        for (Map.Entry<Integer, Session> sessionEntry : clients.entrySet()) {
             sessionEntry.getValue().getAsyncRemote().sendText(message);
         }
+    }
+    /**
+     *
+     * 向指定用户发送信息
+     */
+    static public boolean sendMessage(Integer id, String message){
+        Session target  = clients.get(id);
+        if(target!=null){
+            clients.get(id).getAsyncRemote().sendText(message);
+            return true;
+        }else {
+            log.info("user: {} disconect",id);
+             return false;
+        }
+
     }
 }

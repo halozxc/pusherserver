@@ -6,6 +6,7 @@ import xyz.humilr.pusherserver.dao.ContactMapper;
 import xyz.humilr.pusherserver.dao.GroupFanMapper;
 import xyz.humilr.pusherserver.dao.MessageMapper;
 import xyz.humilr.pusherserver.dao.UserMapper;
+import xyz.humilr.pusherserver.pojo.api.UserInfo;
 import xyz.humilr.pusherserver.pojo.module.GroupFan;
 import xyz.humilr.pusherserver.pojo.module.Message;
 
@@ -24,19 +25,23 @@ public class MessageService {
     GroupService groupService;
     @Autowired
     ContactMapper contactMapper;
-    public boolean publish(Message message){
+    public boolean publish(UserInfo userInfo, Message message){
 //        if(message.getSender() == null){
 //            return  false;
 //        }
+
     if(message.getDestination_matter_id() != null){
+
         //send to the group
-        if (!groupService.isUserInGroup(message.getSender(), message.getDestination_matter_id())) return false;
-      return publishToDatabase(message);
+        if (!groupService.isUserInGroup(userService.queryUserIdByName(message.getSender()), message.getDestination_matter_id())) return false;
+
     }
-    else if(message.getDestination_user_id()!=null){
-   if(!contactMapper.vertifyContact(message.getSender(),message.getDestination_user_id())){
-      return false;
-   }
+    else if(message.getDestination_user()!=null){
+        Integer a =  userService.queryUserIdByName(message.getSender());
+        Integer b = userService.queryUserIdByName(message.getDestination_user());
+           if(!contactMapper.vertifyContact(a,b)){
+          return false;
+        }
        return publishToDatabase(message);
     }
         return true;

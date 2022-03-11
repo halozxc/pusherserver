@@ -116,5 +116,8 @@ public class UserService {
 
         return true;
     }
-
+public Integer queryUserIdByName(String uname)
+{
+    return userMapper.queryuserIdByName(uname);
+}
 }

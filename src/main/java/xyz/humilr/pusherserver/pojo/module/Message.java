@@ -10,9 +10,9 @@ public class Message {
     @Id
     @JsonIgnore
     Integer id;
-    Integer sender;
+   String sender;
     String   body;
-    Integer destination_user_id;
+    String destination_user;
     Integer destination_matter_id;
     public Integer getId() {
         return id;
@@ -21,22 +21,22 @@ public class Message {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Integer getSender() {
+    public String getSender() {
         return sender;
     }
 
-    public void setSender(Integer sender) {
+    public void setSender(String sender) {
         this.sender = sender;
     }
 
 
 
-    public Integer getDestination_user_id() {
-        return destination_user_id;
+    public String getDestination_user() {
+        return destination_user;
     }
 
-    public void setDestination_user_id(Integer destination_user_id) {
-        this.destination_user_id = destination_user_id;
+    public void setDestination_user_id(String destination_user_id) {
+        this.destination_user = destination_user_id;
     }
 
 
@@ -60,4 +60,14 @@ public class Message {
     }
 
 
+    @Override
+    public String toString() {
+        return "Message{" +
+                "id=" + id +
+                ", sender=" + sender +
+                ", body='" + body + '\'' +
+                ", destination_user_id=" + destination_user +
+                ", destination_matter_id=" + destination_matter_id +
+                '}';
+    }
 }
