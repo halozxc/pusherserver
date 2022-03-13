@@ -1,5 +1,7 @@
 package xyz.humilr.pusherserver.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.humilr.pusherserver.dao.ContactMapper;
@@ -11,10 +13,11 @@ import xyz.humilr.pusherserver.pojo.module.GroupFan;
 import xyz.humilr.pusherserver.pojo.module.Message;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 @Service
 public class MessageService {
-
+    private static final Logger logger = LoggerFactory.getLogger(MatterService.class);
     @Autowired
     MessageMapper messageMapper;
     @Autowired
@@ -44,12 +47,15 @@ public class MessageService {
            if(!contactService.vertifyContact(a.intValue(),b.intValue())){
           return false;
         }
+
            message.setPublish_date(new Date());
+           logger.info(message.toString());
        return publishToDatabase(message);
     }
         return true;
     }
     private boolean publishToDatabase(Message message){
+
         message.setId(null);
         return messageMapper.insertSelective(message)>0;
     }

@@ -85,7 +85,7 @@ public class MatterService {
         var mfResult = matterFanMapper.select(record);
         return new ArrayList<Matter>() {{
             for (MatterFan mf : mfResult) {
-                Matter m = matterMapper.selectByPrimaryKey(new Matter(mf.getMatterId()));
+                Matter m = matterMapper.selectByPrimaryKey(mf.getMatterId());
                 if (mf.getSourceType() == MatterSourceType.GROUP.ordinal()) {
                     m.setGroup(groupService.query(mf.getFanId()));
                 }
@@ -110,8 +110,9 @@ public class MatterService {
                     for (var gm1 : gmSelectResult) {
                         Matter matterTmp = new Matter();
                         matterTmp.setId(gm1.getMatterId());
-                        matterTmp = matterMapper.selectByPrimaryKey(matterTmp);
-                        if (after != null && matterTmp.getPublishDate().after(after)) continue;
+                        matterTmp = matterMapper.selectByPrimaryKey(matterTmp.getId());
+                           if (after != null && !matterTmp.getPublishDate().after(after))
+                           {continue;}
                         matterTmp.setGroup(groupService.getGroupBaseInfo(gm1.getGroupId()));
                         add(matterTmp);
                     }

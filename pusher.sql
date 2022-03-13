@@ -237,7 +237,7 @@ CREATE TABLE `matter` (
 
 LOCK TABLES `matter` WRITE;
 /*!40000 ALTER TABLE `matter` DISABLE KEYS */;
-INSERT INTO `matter` (`id`, `headline`, `startdate`, `enddate`, `location`, `isergency`, `body`, `has_file`, `message_id`, `manager_user_id`, `repeat`, `publish_date`) VALUES (17,'上班','2021-07-18 01:34:33','2021-07-18 01:34:33','宿舍',1,'到底上不上',NULL,NULL,1,NULL,'2021-07-19 01:31:21'),(18,'上班','2021-07-18 01:34:33','2021-07-18 01:34:33','宿舍',1,'到底上不上',NULL,NULL,1,NULL,'2021-07-19 03:12:41');
+INSERT INTO `matter` (`id`, `headline`, `startdate`, `enddate`, `location`, `isergency`, `body`, `has_file`, `message_id`, `manager_user_id`, repeatfreq, `publish_date`) VALUES (17,'上班','2021-07-18 01:34:33','2021-07-18 01:34:33','宿舍',1,'到底上不上',NULL,NULL,1,NULL,'2021-07-19 01:31:21'),(18,'上班','2021-07-18 01:34:33','2021-07-18 01:34:33','宿舍',1,'到底上不上',NULL,NULL,1,NULL,'2021-07-19 03:12:41');
 /*!40000 ALTER TABLE `matter` ENABLE KEYS */;
 UNLOCK TABLES;
 

@@ -26,7 +26,7 @@ public class Matter {
     @Transient
     private User managerUser;
     @JsonProperty("repeat")
-    private Integer repeatFreq;
+    private Integer repeatfreq;
     private Date publishDate;
     @Transient
     private GroupPusher group;
@@ -76,12 +76,12 @@ public class Matter {
         this.managerUser = managerUser;
     }
 
-    public Integer getRepeatFreq() {
-        return repeatFreq;
+    public Integer getRepeatfreq() {
+        return repeatfreq;
     }
 
-    public void setRepeatFreq(Integer repeatFreq) {
-        this.repeatFreq = repeatFreq;
+    public void setRepeat(Integer repeatfreq) {
+        this.repeatfreq = repeatfreq;
     }
 
     public GroupPusher getGroup() {

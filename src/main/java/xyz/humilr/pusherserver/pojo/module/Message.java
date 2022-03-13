@@ -75,10 +75,11 @@ public class Message {
     public String toString() {
         return "Message{" +
                 "id=" + id +
-                ", sender=" + sender +
+                ", sender='" + sender + '\'' +
                 ", body='" + body + '\'' +
-                ", destination_user_id=" + destination_user +
+                ", destination_user='" + destination_user + '\'' +
                 ", destination_matter_id=" + destination_matter_id +
+                ", publish_date=" + publish_date +
                 '}';
     }
 }
