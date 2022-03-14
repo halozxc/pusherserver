@@ -4,20 +4,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import xyz.humilr.pusherserver.dao.ContactMapper;
-import xyz.humilr.pusherserver.dao.GroupFanMapper;
-import xyz.humilr.pusherserver.dao.MessageMapper;
-import xyz.humilr.pusherserver.dao.UserMapper;
+import xyz.humilr.pusherserver.dao.*;
 import xyz.humilr.pusherserver.pojo.api.UserInfo;
 import xyz.humilr.pusherserver.pojo.module.GroupFan;
 import xyz.humilr.pusherserver.pojo.module.Message;
 
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 @Service
 public class MessageService {
     private static final Logger logger = LoggerFactory.getLogger(MatterService.class);
+   @Autowired
+    GroupMatterMapper groupMatterMapper;
     @Autowired
     MessageMapper messageMapper;
     @Autowired
@@ -35,26 +35,35 @@ public class MessageService {
 //            return  false;
 //        }
 
-    if(message.getDestination_matter_id() != null){
+    if(message.getDestinationMatteId() != null){
 
         //send to the group
-        if (!groupService.isUserInGroup(userService.queryUserIdByName(message.getSender()), message.getDestination_matter_id())) return false;
+        if (!groupService.isUserInGroup(userService.queryUserIdByName(message.getSender()), groupMatterMapper.queryGroupIdFromMatter(message.getDestinationMatteId())))
+        {
+            return false;
+        }
 
     }
-    else if(message.getDestination_user()!=null){
+    else if(message.getDestinationUser()!=null){
         Integer a =  userService.queryUserIdByName(message.getSender());
-        Integer b = userService.queryUserIdByName(message.getDestination_user());
+        Integer b = userService.queryUserIdByName(message.getDestinationUser());
            if(!contactService.vertifyContact(a.intValue(),b.intValue())){
           return false;
         }
 
-           message.setPublish_date(new Date());
-           logger.info(message.toString());
-       return publishToDatabase(message);
+
     }
-        return true;
+        message.setPublishDate(new Date());
+        logger.info(message.toString());
+        return publishToDatabase(message);
+    }//发布消息
+    public List<Message> queryMessage(UserInfo userInfo, String after){
+        if (userInfo == null) return null;
+        if (after == null) after = "2021-03-13T17:14:11.740+08:00";
+        return messageMapper.queryMessage(userInfo.getUsername(),after);
     }
-    private boolean publishToDatabase(Message message){
+
+    private boolean publishToDatabase( Message message){
 
         message.setId(null);
         return messageMapper.insertSelective(message)>0;

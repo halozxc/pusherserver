@@ -13,18 +13,40 @@ public class Message {
     Integer id;
     String sender;
     String   body;
-    String destination_user;
-    Integer destination_matter_id;
+    String destinationUser;
+    Integer destinationMatterId;
 
-    public Date getPublish_date() {
-        return publish_date;
+    Date publishDate;
+    public String getDestinationUser() {
+        return destinationUser;
     }
 
-    public void setPublish_date(Date publish_date) {
-        this.publish_date = publish_date;
+    public void setDestinationUser(String destinationUser) {
+        this.destinationUser = destinationUser;
     }
 
-    Date publish_date;
+
+
+    public Integer getDestinationMatteId() {
+        return destinationMatterId;
+    }
+
+    public void setDestinationMatteId(Integer destinationMatteId) {
+        this.destinationMatterId = destinationMatteId;
+    }
+
+
+
+
+    public Date getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(Date publishDate) {
+        this.publishDate = publishDate;
+    }
+
+
     public Integer getId() {
         return id;
     }
@@ -42,23 +64,7 @@ public class Message {
 
 
 
-    public String getDestination_user() {
-        return destination_user;
-    }
 
-    public void setDestination_user_id(String destination_user_id) {
-        this.destination_user = destination_user_id;
-    }
-
-
-
-    public Integer getDestination_matter_id() {
-        return destination_matter_id;
-    }
-
-    public void setDestination_matter_id(Integer destination_matter_id) {
-        this.destination_matter_id = destination_matter_id;
-    }
 
 
 
@@ -77,9 +83,9 @@ public class Message {
                 "id=" + id +
                 ", sender='" + sender + '\'' +
                 ", body='" + body + '\'' +
-                ", destination_user='" + destination_user + '\'' +
-                ", destination_matter_id=" + destination_matter_id +
-                ", publish_date=" + publish_date +
+                ", destinationUser='" + destinationUser + '\'' +
+                ", destinationMatteId=" + destinationMatterId +
+                ", publishDate=" + publishDate +
                 '}';
     }
 }

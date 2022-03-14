@@ -11,6 +11,7 @@ import xyz.humilr.pusherserver.service.AuthService;
 import xyz.humilr.pusherserver.service.MessageService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("message")
@@ -30,6 +31,13 @@ public class MessageController {
        }else {
            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
        }
+
+    }
+    @GetMapping(value = "query")
+    @ResponseBody
+    public ResponseEntity<List<Message>> queryMessage(@CookieValue(name = "PUSHER_TOKEN")String token, @RequestParam(value = "afterdate",required= false ) String data){
+       var result = messageService.queryMessage(authService.resolveToken(token),data);
+       return  ResponseEntity.ok(result);
 
     }
 }
