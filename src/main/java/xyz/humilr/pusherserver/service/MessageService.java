@@ -47,7 +47,7 @@ public class MessageService {
     else if(message.getDestinationUser()!=null){
         Integer a =  userService.queryUserIdByName(message.getSender());
         Integer b = userService.queryUserIdByName(message.getDestinationUser());
-           if(!contactService.vertifyContact(a.intValue(),b.intValue())){
+           if(!contactService.vertifyContact(a,b)){
           return false;
         }
 
