@@ -9,10 +9,10 @@ public class Message {
 
 
     @Id
-    @JsonIgnore
+    //@JsonIgnore
     Integer id;
     String sender;
-    String   body;
+    String  body;
     String destinationUser;
     Integer destinationMatterId;
 

@@ -3,6 +3,9 @@ package xyz.humilr.pusherserver.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import xyz.humilr.pusherserver.dao.ContactMapper;
+import xyz.humilr.pusherserver.pojo.module.User;
+
+import java.util.List;
 
 @Service
 public class ContactService {
@@ -13,5 +16,8 @@ public class ContactService {
         Integer a = contactMapper.vertifyContact(user_1,user_2) ;
 
         return (a != null);
+    }
+    public List<User> queryContact(Integer user){
+        return contactMapper.queryContacts(user);
     }
 }
