@@ -1,6 +1,7 @@
 package xyz.humilr.pusherserver.pojo.module;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.Id;
 import java.util.Date;
@@ -14,6 +15,9 @@ public class Message {
     String sender;
     String  body;
     String destinationUser;
+
+
+
     Integer destinationMatterId;
 
     Date publishDate;
@@ -26,14 +30,14 @@ public class Message {
     }
 
 
-
-    public Integer getDestinationMatteId() {
+    public Integer getDestinationMatterId() {
         return destinationMatterId;
     }
 
-    public void setDestinationMatteId(Integer destinationMatteId) {
-        this.destinationMatterId = destinationMatteId;
+    public void setDestinationMatterId(Integer destinationMatterId) {
+        this.destinationMatterId = destinationMatterId;
     }
+
 
 
 

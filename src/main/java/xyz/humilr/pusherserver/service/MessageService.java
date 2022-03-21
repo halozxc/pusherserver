@@ -35,10 +35,10 @@ public class MessageService {
 //            return  false;
 //        }
 
-    if(message.getDestinationMatteId() != null){
+    if(message.getDestinationMatterId()!=null){
 
         //send to the group
-        if (!groupService.isUserInGroup(userService.queryUserIdByName(message.getSender()), groupMatterMapper.queryGroupIdFromMatter(message.getDestinationMatteId())))
+        if (!groupService.isUserInGroup(userService.queryUserIdByName(message.getSender()), groupMatterMapper.queryGroupIdFromMatter(message.getDestinationMatterId())))
         {
             return false;
         }
