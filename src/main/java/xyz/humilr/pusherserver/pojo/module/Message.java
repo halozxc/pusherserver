@@ -10,7 +10,7 @@ public class Message {
 
 
     @Id
-    //@JsonIgnore
+    @JsonProperty("messageId")
     Integer id;
     String sender;
     String  body;
