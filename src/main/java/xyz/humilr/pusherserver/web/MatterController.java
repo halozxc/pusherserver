@@ -58,6 +58,11 @@ public class MatterController {
         var queryResult = matterService.querySubscribed(authService.resolveToken(token));
         return ResponseEntity.ok(queryResult);
     }
+    @GetMapping("queryid")
+    public ResponseEntity<List<Integer>> queryMattersId(@CookieValue(name = "PUSHER_TOKEN") String token) {
+        var queryResult = matterService.querySubscribedId(authService.resolveToken(token));
+        return ResponseEntity.ok(queryResult);
+    }
     @GetMapping("query/group")
     public ResponseEntity<List<Matter>> queryJoinedGroupMatters(@RequestParam(value = "afterdate",required= false ) String afterDate,@CookieValue(name = "PUSHER_TOKEN") String token) {
         //yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ

@@ -81,23 +81,12 @@ public class MatterService {
 
     public List<Matter> querySubscribed(UserInfo userInfo) {
         MatterFan record = new MatterFan();
-        record.setFanId(userInfo.getId());
-        var mfResult = matterFanMapper.select(record);
-        return new ArrayList<Matter>() {{
-            for (MatterFan mf : mfResult) {
-                Matter m = matterMapper.selectByPrimaryKey(mf.getMatterId());
-                if (mf.getSourceType() == MatterSourceType.GROUP.ordinal()) {
-                    m.setGroup(groupService.query(mf.getFanId()));
-                }
-                if (mf.getSourceType() == MatterSourceType.USER.ordinal()) {
-                  //
-                }
-                m.setManagerUser(userService.queryUserIgnoreSensitive(m.getManagerUserId()));
-                add(m);
-            }
-        }};
+        return matterMapper.getUserSubscribeMatter(userInfo.getId());
     }
-
+    public List<Integer> querySubscribedId(UserInfo userInfo) {
+        MatterFan record = new MatterFan();
+        return matterMapper.getUserSubscribeMatterId(userInfo.getId());
+    }
     public List<Matter> queryJoinedGroup(UserInfo userInfo, Date after) {
         var joinedGroups = groupService.queryJoined(userInfo);
         return new ArrayList<>() {{
