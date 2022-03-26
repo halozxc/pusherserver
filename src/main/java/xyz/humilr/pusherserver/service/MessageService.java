@@ -3,11 +3,13 @@ package xyz.humilr.pusherserver.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.relational.core.sql.In;
 import org.springframework.stereotype.Service;
 import xyz.humilr.pusherserver.dao.*;
 import xyz.humilr.pusherserver.pojo.api.UserInfo;
 import xyz.humilr.pusherserver.pojo.module.GroupFan;
 import xyz.humilr.pusherserver.pojo.module.Message;
+import xyz.humilr.pusherserver.web.PusherWebSocketController;
 
 import java.util.Date;
 import java.util.List;
@@ -34,7 +36,7 @@ public class MessageService {
 //        if(message.getSender() == null){
 //            return  false;
 //        }
-
+        message.setSender(userInfo.getUsername());
     if(message.getDestinationMatterId()!=null){
 
         //send to the group
@@ -53,9 +55,16 @@ public class MessageService {
 
 
     }
+
         message.setPublishDate(new Date());
+
         logger.info(message.toString());
-        return publishToDatabase(message);
+        publishToDatabase(message);
+        if(message.getDestinationUser()!=null){
+            Integer desid = userService.queryUserIdByName(message.getDestinationUser());
+            PusherWebSocketController.sendMessage(desid,"new message");
+        }
+        return true;
     }//发布消息
     public List<Message> queryMessage(UserInfo userInfo, String after){
         if (userInfo == null) return null;

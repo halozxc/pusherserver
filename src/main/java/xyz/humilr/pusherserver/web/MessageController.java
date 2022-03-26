@@ -22,6 +22,7 @@ public class MessageController {
     AuthService authService;
     @Autowired
     MessageService messageService;
+
     @PostMapping(value = "sending")
     @ResponseBody
     public ResponseEntity<Void> sendingMessage(@CookieValue(name = "PUSHER_TOKEN")String token,  @RequestBody Message message){
