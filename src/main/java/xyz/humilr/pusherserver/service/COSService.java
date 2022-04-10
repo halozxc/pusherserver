@@ -63,7 +63,8 @@ public class COSService {
                    "name/cos:ListMultipartUploads",
                    "name/cos:ListParts",
                    "name/cos:UploadPart",
-                   "name/cos:CompleteMultipartUpload"
+                   "name/cos:CompleteMultipartUpload",
+                   "name/cos:GetObject"
            };
            config.put("allowActions", allowActions);
 

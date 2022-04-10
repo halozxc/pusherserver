@@ -62,7 +62,9 @@ public class MessageService {
         publishToDatabase(message);
         if(message.getDestinationUser()!=null){
             Integer desid = userService.queryUserIdByName(message.getDestinationUser());
+            Integer senderid = userService.queryUserIdByName(message.getSender());
             PusherWebSocketController.sendMessage(desid,"new message");
+            PusherWebSocketController.sendMessage(senderid,"new message");
         }
         return true;
     }//发布消息
