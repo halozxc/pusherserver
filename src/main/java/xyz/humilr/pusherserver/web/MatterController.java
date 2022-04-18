@@ -68,7 +68,7 @@ public class MatterController {
         //yyyy-MM-dd'T'HH:mm:ss.SSSZZZZZ
         Date after  = new Date();
         DateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-        sdf1.setTimeZone(TimeZone.getTimeZone("UTC")); //获取时区
+        sdf1.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai")); //获取时区
 
 
 if(StringUtils.isEmpty(afterDate)){

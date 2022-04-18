@@ -17,7 +17,7 @@ public class User {
     private String umail;
     @JsonIgnore
     private String salt;
-    private Integer avatarId;
+    private Integer avatarid;
 
     public User() {
     }
@@ -33,11 +33,11 @@ public class User {
     }
 
     public Integer getAvatarId() {
-        return avatarId;
+        return avatarid;
     }
 
     public void setAvatarId(Integer avatarId) {
-        this.avatarId = avatarId;
+        this.avatarid = avatarId;
     }
 
     public Integer getId() {

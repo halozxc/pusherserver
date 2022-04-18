@@ -74,7 +74,7 @@ public class MatterService {
         if (mid == null) return false;
         MatterFan newMatterFan = new MatterFan(mid, userInfo.getId());
         MatterFan exist = matterFanMapper.selectOne(newMatterFan);
-        //已订阅
+        //已订阅 
         if (exist == null) return false;
         return matterFanMapper.deleteByPrimaryKey(exist) > 0;
     }

@@ -319,7 +319,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `uname`, `nickname`, `upassword`, `utel`, `umail`, `salt`, `avatar_id`) VALUES (1,'pusher_1','u1','7268d1079c7f386923eac0d6a1e808b9','13666665555',NULL,'77fb62b511334f5b945520a9d1128a1e',NULL),(2,'hmw','u2','29f352b00457ec5fd24925536b9165aa',NULL,NULL,'21fec5e6b8cd4951bce0f4e413ec5d99',NULL);
+INSERT INTO `user` (`id`, `uname`, `nickname`, `upassword`, `utel`, `umail`, `salt`, avatarid) VALUES (1,'pusher_1','u1','7268d1079c7f386923eac0d6a1e808b9','13666665555',NULL,'77fb62b511334f5b945520a9d1128a1e',NULL),(2,'hmw','u2','29f352b00457ec5fd24925536b9165aa',NULL,NULL,'21fec5e6b8cd4951bce0f4e413ec5d99',NULL);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 

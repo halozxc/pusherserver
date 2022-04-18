@@ -149,4 +149,7 @@ public class GroupService {
         gfRecord.setGroupId(gid);
         return groupFanMapper.selectCount(gfRecord)>0;
     }
+
+
+
 }
