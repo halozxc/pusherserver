@@ -72,7 +72,13 @@ public class MatterController {
         if (subsResult) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
     }
+   @PostMapping("subscribe/cancel")
+   public ResponseEntity cancelFromGroup(@CookieValue(name = "PUSHER_TOKEN") String token, @RequestBody Matter matter){
+        var  subsResult = matterService.subsCancel(authService.resolveToken(token),matter.getId());
+        if(subsResult) return  ResponseEntity.ok().build();
+        else return ResponseEntity.badRequest().build();
 
+   }
     @GetMapping("query")
     public ResponseEntity<List<Matter>> queryMatters(@CookieValue(name = "PUSHER_TOKEN") String token) {
         var queryResult = matterService.querySubscribed(authService.resolveToken(token));

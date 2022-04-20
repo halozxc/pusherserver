@@ -53,7 +53,7 @@ public class MatterService {
     public boolean subscribeFromGroup(UserInfo userInfo, Integer mid) {
         if (mid == null) return false;
         MatterFan newMatterFan = new MatterFan(mid, userInfo.getId());
-        newMatterFan.setSourceType(MatterSourceType.GROUP.ordinal());
+       // newMatterFan.setSourceType(MatterSourceType.GROUP.ordinal());
         MatterFan exist = matterFanMapper.selectOne(newMatterFan);
         //已订阅
         if (exist != null) return true;

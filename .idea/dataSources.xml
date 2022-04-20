@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:mysql://127.0.0.1:3306/pusher</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="pusher@124.223.181.74" uuid="9d8efbec-4f95-4a38-be6d-fc5c4af4459e">
+    <data-source source="LOCAL" name="pusher@124.223.181.74" uuid="a4f1ad8e-f418-46da-baea-e5ab3540f46d">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
