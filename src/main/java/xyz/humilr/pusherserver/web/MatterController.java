@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -38,6 +39,25 @@ public class MatterController {
         var pubResult = matterService.publishToGroup(authService.resolveToken(token), matter, matter.getGroupId());
         if (pubResult) return ResponseEntity.ok().build();
         else return ResponseEntity.badRequest().build();
+    }
+    @PostMapping("publish/update")
+    public  ResponseEntity update2Group(@CookieValue(name = "PUSHER_TOKEN") String token, @RequestBody Matter matter){
+        var userinfo = authService.resolveToken(token);
+        if (userinfo != null){
+         Integer result  = matterService.UpdateMatter(matter);
+        if (result>0){
+            return ResponseEntity.ok().build();
+        }
+        else {
+            return ResponseEntity.badRequest().build();
+        }
+
+        }
+        else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+
     }
 
     //    @PostMapping("publish/user")

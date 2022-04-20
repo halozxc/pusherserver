@@ -109,4 +109,13 @@ public class MatterService {
             }
         }};
     }
+    public  Integer UpdateMatter(Matter matter){
+
+        matter.setPublishDate(new Date());
+        return   matterMapper.updateByPrimaryKey(matter);
+
+
+
+    }
+
 }
