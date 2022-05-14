@@ -29,6 +29,7 @@ public class UserService {
         record.setUname(user.getUname());
         record.setUtel(user.getUtel());
         record.setNickname(user.getNickname());
+        record.setAvatarId(user.getAvatarId());
         return record;
 //        return userMapper.selectOne(record);
     }
@@ -43,6 +44,7 @@ public class UserService {
         if (user == null) return null;
         record.setUname(user.getUname());
         record.setNickname(user.getNickname());
+        record.setAvatarId(user.getAvatarId());
         return record;
 //        return userMapper.selectOne(record);
     }
@@ -91,7 +93,7 @@ public class UserService {
         user.setSalt(salt);
         user.setUpassword(CodecUtils.md5Hex(user.getUpassword(), salt));
         user.setNickname(user.getUname());
-        user.setAvatarId(new Random().nextInt() % 18);
+        user.setAvatarId(new Random().nextInt() % 15);
         userMapper.insertSelective(user);
         return true;
     }

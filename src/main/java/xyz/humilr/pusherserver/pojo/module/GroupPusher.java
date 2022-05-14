@@ -15,7 +15,9 @@ public class GroupPusher {
     Integer creatorUserId;
     String groupname;
     @Transient
+
     User creator;
+
     @Transient
     List<GroupFan> fans;
 

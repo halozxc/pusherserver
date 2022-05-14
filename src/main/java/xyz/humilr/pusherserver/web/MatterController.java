@@ -11,6 +11,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import xyz.humilr.pusherserver.pojo.module.Matter;
 import xyz.humilr.pusherserver.service.AuthService;
+import xyz.humilr.pusherserver.service.MatterHistoryService;
 import xyz.humilr.pusherserver.service.MatterService;
 import xyz.humilr.pusherserver.service.UserService;
 
@@ -33,6 +34,8 @@ public class MatterController {
     MatterService matterService;
     @Autowired
     AuthService authService;
+    @Autowired
+    MatterHistoryService matterHistoryService;
 
     @PostMapping("publish/group")
     public ResponseEntity publish2Group(@CookieValue(name = "PUSHER_TOKEN") String token, @RequestBody Matter matter) {
@@ -41,11 +44,14 @@ public class MatterController {
         else return ResponseEntity.badRequest().build();
     }
     @PostMapping("publish/update")
-    public  ResponseEntity update2Group(@CookieValue(name = "PUSHER_TOKEN") String token, @RequestBody Matter matter){
+    public  ResponseEntity update2Group(@CookieValue(name = "PUSHER_TOKEN") String token, @RequestBody Matter matter,@RequestParam(value = "sync",required= true ) Boolean sync){
         var userinfo = authService.resolveToken(token);
+
         if (userinfo != null){
-         Integer result  = matterService.UpdateMatter(matter);
+         Integer result  = matterService.UpdateMatter(matter,sync);
         if (result>0){
+
+
             return ResponseEntity.ok().build();
         }
         else {

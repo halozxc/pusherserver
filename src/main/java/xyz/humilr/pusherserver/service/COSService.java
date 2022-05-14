@@ -64,7 +64,10 @@ public class COSService {
                    "name/cos:ListParts",
                    "name/cos:UploadPart",
                    "name/cos:CompleteMultipartUpload",
-                   "name/cos:GetObject"
+                   "name/cos:GetObject",
+                   "name/cos:HeadBucket",
+                   "name/cos:GetBucket"
+
            };
            config.put("allowActions", allowActions);
 

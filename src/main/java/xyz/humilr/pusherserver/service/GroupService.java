@@ -5,8 +5,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import xyz.humilr.pusherserver.config.JwtProperties;
 import xyz.humilr.pusherserver.dao.GroupFanMapper;
+import xyz.humilr.pusherserver.dao.GroupManagerMapper;
 import xyz.humilr.pusherserver.dao.GroupPusherMapper;
 import xyz.humilr.pusherserver.pojo.api.UserInfo;
+import xyz.humilr.pusherserver.pojo.module.GroupManager;
 import xyz.humilr.pusherserver.pojo.module.GroupPusher;
 import xyz.humilr.pusherserver.pojo.module.GroupFan;
 import xyz.humilr.pusherserver.pojo.module.User;
@@ -26,6 +28,8 @@ public class GroupService {
     UserService userService;
     @Autowired
     JwtProperties jwtProperties;
+    @Autowired
+    GroupManagerMapper groupManagerMapper;
 
     public boolean create(UserInfo userInfo, String name) {
         if (userInfo == null) {
@@ -112,7 +116,7 @@ public class GroupService {
                         var fuid = gfs.get(i).getUserId();
                         User fuser_t = userService.queryUserIgnoreSensitive(fuid);
                         if (fuser_t == null) continue;
-                        var fuser = new User(fuser_t.getId(), fuser_t.getUname(), fuser_t.getNickname());
+                        var fuser = new User(fuser_t.getId(), fuser_t.getUname(), fuser_t.getNickname(),fuser_t.getAvatarId());
                         gfs.get(i).setUserInfo(fuser);
                         add(gfs.get(i));
                     }
@@ -150,6 +154,29 @@ public class GroupService {
         return groupFanMapper.selectCount(gfRecord)>0;
     }
 
+    public GroupPusher searchGroup(UserInfo userInfo,Integer id){
 
+        if(userInfo != null){
+           var tmp =  groupMapper.searchGroupById(id);
+           return tmp;
+        }
+        else {
+            return null;
+        }
+
+ }
+
+    public Boolean AuthorizeManager(UserInfo userInfo,Integer gid ,String username){
+      var userid  = userService.queryUserIdByName(username);
+
+        var  grecord = groupMapper.selectByPrimaryKey(gid);
+        if (userInfo.getId() == grecord.getCreatorUserId()) {
+          return   groupManagerMapper.insertSelective(new GroupManager(gid,userid)) > 0;
+
+        }
+        else {
+            return false;
+        }
+    }
 
 }

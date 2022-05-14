@@ -13,6 +13,7 @@ public class GroupFan {
     Integer userId;
     String displayName;
     @Transient
+    //@JsonIgnore
     User userInfo;
 
     public GroupFan() {
@@ -29,6 +30,7 @@ public class GroupFan {
 
     public void setUserInfo(User userInfo) {
         this.userInfo = userInfo;
+
     }
 
     public Integer getGroupId() {
@@ -54,4 +56,5 @@ public class GroupFan {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
+
 }

@@ -3,10 +3,8 @@ package xyz.humilr.pusherserver.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import xyz.humilr.pusherserver.pojo.api.UserInfo;
 import xyz.humilr.pusherserver.pojo.module.User;
 import xyz.humilr.pusherserver.service.AuthService;
 import xyz.humilr.pusherserver.service.ContactService;
@@ -30,6 +28,12 @@ public class ContactController {
         {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    @GetMapping("searchContactById")
+    public ResponseEntity<User> searchUserById(@CookieValue("PUSHER_TOKEN")String token, @RequestParam("userId") Integer id){
+      return ResponseEntity.ok(contactService.searchUser(authService.resolveToken(token),id));
+
     }
 
 }

@@ -29,6 +29,8 @@ public class MatterService {
     GroupService groupService;
     @Autowired
     UserService userService;
+    @Autowired
+    MatterHistoryService matterHistoryService;
 
     public boolean publish(UserInfo userInfo, Matter matter) {
         //logger.info(matterMapper.getTime().toString());
@@ -109,9 +111,19 @@ public class MatterService {
             }
         }};
     }
-    public  Integer UpdateMatter(Matter matter){
-
-        matter.setPublishDate(new Date());
+    public  Integer UpdateMatter(Matter matter,Boolean sync){
+       var now = new Date();
+        if (sync == true){
+           var old = matterMapper.selectByPrimaryKey(matter);
+           var tmp = new MatterHistory();
+           tmp.setId(null);
+           tmp.setHostId(old.getId());
+           tmp.setPublishDate(old.getPublishDate());
+           tmp.setBody(old.getBody());
+           tmp.setEndDate(now);
+           matterHistoryService.matterHistoryMapper.insertSelective(tmp);
+       }
+        matter.setPublishDate(now);
         return   matterMapper.updateByPrimaryKey(matter);
 
 

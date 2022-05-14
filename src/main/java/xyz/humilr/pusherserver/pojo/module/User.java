@@ -31,7 +31,12 @@ public class User {
         this.uname = uname;
         this.nickname = nickname;
     }
-
+    public User(Integer id, String uname, String nickname,Integer avatarid) {
+        this.id = id;
+        this.uname = uname;
+        this.nickname = nickname;
+        this.avatarid = avatarid;
+    }
     public Integer getAvatarId() {
         return avatarid;
     }

@@ -9,4 +9,6 @@ public interface GroupPusherMapper extends tk.mybatis.mapper.common.Mapper<Group
 
     @Select("select * from group_pusher where creator_user_id=#{uid} order by id desc limit 1")
     GroupPusher queryUserLastGroup(int uid);
+    @Select("select * from group_pusher where id = #{gid} limit 1")
+    GroupPusher searchGroupById(int gid);
 }
