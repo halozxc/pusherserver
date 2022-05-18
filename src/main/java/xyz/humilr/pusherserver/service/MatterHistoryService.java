@@ -21,4 +21,7 @@ public List<MatterHistory> queryMatterHistoryById(UserInfo info, Integer id){
         return matterHistoryMapper.queryMatterHistoryById(id);
     }
 }
+MatterHistory queryLatestedVersion(Integer id){//id is host_id
+    return matterHistoryMapper.querylatestedVersion(id);
+}
 }

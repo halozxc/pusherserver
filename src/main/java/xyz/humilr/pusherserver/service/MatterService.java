@@ -31,7 +31,6 @@ public class MatterService {
     UserService userService;
     @Autowired
     MatterHistoryService matterHistoryService;
-
     public boolean publish(UserInfo userInfo, Matter matter) {
         //logger.info(matterMapper.getTime().toString());
         matter.setId(null);
@@ -40,7 +39,6 @@ public class MatterService {
 
         return matterMapper.insertSelective(matter) > 0;
     }
-
     public boolean publishToGroup(UserInfo userInfo, Matter matter, Integer gid) {
         if (!groupService.isUserInGroup(userInfo.getId(), gid)) return false;
 
@@ -51,7 +49,6 @@ public class MatterService {
         if (newMatter == null) return false;
         return groupMatterMapper.insertSelective(new GroupMatter(gid, newMatter.getId())) > 0;
     }
-
     public boolean subscribeFromGroup(UserInfo userInfo, Integer mid) {
         if (mid == null) return false;
         MatterFan newMatterFan = new MatterFan(mid, userInfo.getId());
@@ -61,7 +58,6 @@ public class MatterService {
         if (exist != null) return true;
         return matterFanMapper.insert(newMatterFan) > 0;
     }
-
     public boolean subscribeFromUser(UserInfo userInfo, Integer mid) {
         if (mid == null) return false;
         MatterFan newMatterFan = new MatterFan(mid, userInfo.getId());
@@ -71,7 +67,6 @@ public class MatterService {
         if (exist != null) return true;
         return matterFanMapper.insertSelective(newMatterFan) > 0;
     }
-
     public boolean subsCancel(UserInfo userInfo, Integer mid) {
         if (mid == null) return false;
         MatterFan newMatterFan = new MatterFan(mid, userInfo.getId());
@@ -80,7 +75,6 @@ public class MatterService {
         if (exist == null) return false;
         return matterFanMapper.deleteByPrimaryKey(exist) > 0;
     }
-
     public List<Matter> querySubscribed(UserInfo userInfo) {
         MatterFan record = new MatterFan();
         return matterMapper.getUserSubscribeMatter(userInfo.getId());
@@ -122,7 +116,15 @@ public class MatterService {
            tmp.setBody(old.getBody());
            tmp.setEndDate(now);
            matterHistoryService.matterHistoryMapper.insertSelective(tmp);
-       }
+       }else
+        {
+           var old = matterHistoryService.queryLatestedVersion(matter.getId());
+           if (old != null){
+               old.setEndDate(now);
+               matterHistoryService.matterHistoryMapper.updateByPrimaryKey(old);
+        }
+        }
+
         matter.setPublishDate(now);
         return   matterMapper.updateByPrimaryKey(matter);
 

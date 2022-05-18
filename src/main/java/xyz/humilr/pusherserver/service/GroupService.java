@@ -178,5 +178,9 @@ public class GroupService {
             return false;
         }
     }
+    public List<GroupFan> queryFan(Integer gid){
+     return  groupFanMapper.getGroupFan(gid);
+
+    }
 
 }

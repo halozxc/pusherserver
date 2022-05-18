@@ -66,6 +66,15 @@ public class MessageService {
             PusherWebSocketController.sendMessage(desid,"new message");
             PusherWebSocketController.sendMessage(senderid,"new message");
         }
+        else if (message.getDestinationMatterId()!=null){
+            var sendlist = groupService.queryFan(message.getDestinationMatterId());
+            for (GroupFan v : sendlist) {
+                Integer desid = v.getUserId();
+                Integer senderid = userService.queryUserIdByName(message.getSender());
+                PusherWebSocketController.sendMessage(desid,"new message");
+                PusherWebSocketController.sendMessage(senderid,"new message");
+            }
+        }
         return true;
     }//发布消息
     public List<Message> queryMessage(UserInfo userInfo, String after){

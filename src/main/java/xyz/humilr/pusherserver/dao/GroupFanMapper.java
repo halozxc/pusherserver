@@ -13,4 +13,6 @@ public interface GroupFanMapper extends tk.mybatis.mapper.common.Mapper<GroupFan
     int updateDisplayName(int groupId,int userId,String displayName);
      @Select("select avatarid from user us where exists (select * from group_fan gf where gf.user_id = us.id and gf.group_id = #{groupid})")
     List<Integer> getMatterAvater(int groupid);
+     @Select("select * from group_fan where group_id = #{id}")
+    List<GroupFan> getGroupFan(Integer id);
 }

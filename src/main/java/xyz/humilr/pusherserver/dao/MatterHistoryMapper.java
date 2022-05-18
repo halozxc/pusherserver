@@ -11,4 +11,6 @@ import java.util.List;
 public interface MatterHistoryMapper extends tk.mybatis.mapper.common.Mapper<MatterHistory>{
 @Select("select * from matter_history where host_id = #{id}")
     List<MatterHistory>queryMatterHistoryById(Integer id);
+@Select("select * from matter_history where host_id = #{id}  order by end_date desc limit 1")
+    MatterHistory querylatestedVersion(Integer id);
 }
