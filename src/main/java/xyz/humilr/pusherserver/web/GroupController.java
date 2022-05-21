@@ -72,5 +72,16 @@ public class GroupController {
             return  ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-
+    @GetMapping("query/manager")
+   ResponseEntity<List<String>> queryManagerId(@RequestParam(value = "groupid" )Integer id ,@CookieValue(name = "PUSHER_TOKEN") String token){
+        var info = authService.resolveToken(token);
+        if( info != null){
+            var result = groupService.queryManager(id);
+            var a = 1.0;
+            return ResponseEntity.ok(result);
+        }
+        else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
 }

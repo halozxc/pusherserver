@@ -182,5 +182,17 @@ public class GroupService {
      return  groupFanMapper.getGroupFan(gid);
 
     }
+    public List<String> queryManager(Integer id){
+        var idList =  groupManagerMapper.queryManagerId(id);
+        List<String>  result = new ArrayList<String>();
+ for (Integer i : idList){
+ var str = userService.userMapper.selectByPrimaryKey(i).getUname();
+    result.add(str);
+
+ }
+
+
+         return result;
+    }
 
 }
